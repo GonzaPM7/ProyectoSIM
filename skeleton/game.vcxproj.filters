@@ -29,6 +29,9 @@
     <ClCompile Include="ParticleCable.cpp" />
     <ClCompile Include="GeneratorRB.cpp" />
     <ClCompile Include="ExplosionRG.cpp" />
+    <ClCompile Include="Player.cpp">
+      <Filter>Proyecto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -59,10 +62,16 @@
     <ClInclude Include="ParticleCable.h" />
     <ClInclude Include="GeneratorRB.h" />
     <ClInclude Include="ExplosionRG.h" />
+    <ClInclude Include="Player.h">
+      <Filter>Proyecto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Proyecto">
+      <UniqueIdentifier>{6a343d96-4bab-4dc6-bed4-38dae7abbec3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

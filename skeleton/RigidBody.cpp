@@ -67,6 +67,11 @@ void RigidBody::addForce(Vector3 f)
 	particleDynamic->addForce(f);
 }
 
+void RigidBody::setVelocity(Vector3 v)
+{
+	particleDynamic->setLinearVelocity(v, true);
+}
+
 PxGeometry RigidBody::getGeo()
 {
 	if (Geosphere)

@@ -48,6 +48,21 @@ public:
 	physx::PxVec3		getEye()	const;
 	physx::PxVec3		getDir()	const;
 	physx::PxTransform	getTransform() const;
+	void setTransform(float x, float y, float z)
+	{
+
+		mEye.x = x;
+		mEye.y = y;
+		mEye.z = z;
+
+	};
+
+	void setDir(float x, float y, float z)
+	{
+		mDir.x = x;
+		mDir.y = y;
+		mDir.z = z;
+	};
 private:
 	physx::PxVec3	mEye;
 	physx::PxVec3	mDir;

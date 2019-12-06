@@ -28,6 +28,7 @@ public:
 	RigidBody(bool Dynamic, Vector3 pos_, Vector3 lados, PxScene* scene_, PxPhysics* physics_, float time);
 	~RigidBody();
 	void addForce(Vector3 f);
+	void setVelocity(Vector3 v);
 	PxGeometry getGeo();
 	Vector3 getPosition();
 	PxReal getMass();

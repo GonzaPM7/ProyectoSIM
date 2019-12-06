@@ -23,6 +23,7 @@
 #include "GeneratorRB.h"
 #include "RigidBody.h"
 #include "ExplosionRG.h"
+#include "Player.h"
 
 using namespace physx;
 
@@ -69,6 +70,9 @@ WindForceRB* windRB;
 RigidBody* suelo;
 std::vector<RigidBody*> rigidBody;
 
+//Proyecto
+Player* player;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -91,8 +95,14 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-
 	
+	
+	//GetCamera()->setDir(0, 0, -100);
+	//Suelo
+	RigidBody* suelo = new RigidBody(false, Vector3(910, -115, 0), Vector3(1000, 100, 20), gScene,gPhysics,0);
+	//Player
+	player = new Player(Vector3(0, 0, 0), gScene, gPhysics);	
+	GetCamera()->setTransform(player->getPosition().x + 100, 0, player->getPosition().z + 200);
 }
 
 
@@ -121,6 +131,9 @@ void stepPhysics(bool interactive, double t)
 			}
 		}
 	}
+
+	player->update(1);
+	GetCamera()->setTransform(player->getPosition().x + 100, 0, player->getPosition().z + 200);
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
@@ -152,6 +165,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
+	case ' ':
+	{
+		player->Jump(3000);
+		break;
+	}
 	case 'V':
 	{
 		activeV = true;
