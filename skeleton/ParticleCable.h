@@ -8,7 +8,7 @@ public:
 public:
 	ParticleCable();
 	virtual unsigned addContact(ParticleContact* contact, unsigned limit);
-	virtual void update();
+	void update(bool parado);
 };
 
 

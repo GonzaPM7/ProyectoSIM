@@ -11,7 +11,5 @@ protected:
 public:
 	ParticleLink();
 	virtual unsigned addContact(ParticleContact* contact, unsigned limit) = 0;
-	Vector3 getLinkVelocity();
-	virtual void update() = 0;
 };
 

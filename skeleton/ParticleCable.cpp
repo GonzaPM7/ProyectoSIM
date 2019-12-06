@@ -1,5 +1,6 @@
 #include "ParticleCable.h"
-
+#include <iostream>
+using namespace std;
 ParticleCable::ParticleCable()
 {
 }
@@ -18,13 +19,19 @@ unsigned ParticleCable::addContact(ParticleContact* contact, unsigned limit)
 	return 1;
 }
 
-void ParticleCable::update()
+void ParticleCable::update(bool parado)
 {
-	float length = currentLength();
-	if (length >= maxLength)
+	if (currentLength() >= maxLength)
 	{
-		particle[0]->setVelocity(getLinkVelocity());
-		particle[1]->setVelocity(getLinkVelocity());
+		if (parado) {
+			PxVec3 direccion = (particle[0]->getPosition() - particle[1]->getPosition()).getNormalized();
+			particle[1]->setVelocity(particle[0]->getVelocity().magnitude() * direccion);
+
+		}
+		else {
+			PxVec3 direccion = (particle[1]->getPosition() - particle[0]->getPosition()).getNormalized();
+			particle[0]->setVelocity(particle[1]->getVelocity().magnitude() * direccion);
+		}
 	}
 }
 

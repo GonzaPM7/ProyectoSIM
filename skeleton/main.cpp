@@ -92,16 +92,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	registroRB = new ParticleForceRegistryRB();
-	explosion = new ExplosionRB(5000);
-	windRB = new WindForceRB(Vector3(0, 0, 200));
-
-	//Suelo
-	suelo = new RigidBody(false, Vector3(0, 0, 0), Vector3(1000, 1, 1000), gScene, gPhysics, 1000);
-	new RigidBody(false, Vector3(0, 0, -300), Vector3(1000, 1000, 1), gScene, gPhysics, 1000);
-
-	generador = new GeneratorRB(Vector3(0,50,0), Vector3(0,5000,0), rigidBody, registroRB, 50, gScene, gPhysics, 50, windRB, explosion);
-	generador2 = new GeneratorRB(Vector3(0, 50, -100), Vector3(0,100,0), rigidBody, registroRB, 20, gScene, gPhysics, 50, windRB, explosion);
+	
 }
 
 
@@ -133,9 +124,6 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	generador->update();
-	generador2->update();
-	registroRB->updateForces(1);
 }
 
 // Function to clean data
@@ -167,11 +155,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'V':
 	{
 		activeV = true;
-		delete suelo;
 		break;
 	}
 	case 'B':
 	{
+		//p->setVelocity(Vector3(0, 0, 0));
 		activeV = false;
 		break;
 	}

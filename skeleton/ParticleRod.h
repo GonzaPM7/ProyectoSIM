@@ -1,13 +1,12 @@
 #pragma once
 #include "ParticleLink.h"
-class ParticleRod :	public ParticleLink
+class ParticleRod : public ParticleLink
 {
 public:
-	float length;
+	float maxlength;
 public:
 	ParticleRod();
 	virtual unsigned addContact(ParticleContact* contact, unsigned limit);
-	void setParticleDistance();
-	virtual void update();
+	void update(bool parado);
 };
 
