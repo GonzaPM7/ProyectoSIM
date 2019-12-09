@@ -32,6 +32,12 @@
     <ClCompile Include="Player.cpp">
       <Filter>Proyecto</Filter>
     </ClCompile>
+    <ClCompile Include="SimpleObstacle.cpp">
+      <Filter>Proyecto</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveObstacle.cpp">
+      <Filter>Proyecto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -63,6 +69,12 @@
     <ClInclude Include="GeneratorRB.h" />
     <ClInclude Include="ExplosionRG.h" />
     <ClInclude Include="Player.h">
+      <Filter>Proyecto</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleObstacle.h">
+      <Filter>Proyecto</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveObstacle.h">
       <Filter>Proyecto</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,7 @@
 #include <PxPhysicsAPI.h>
 
 #include <vector>
-
+#include <iostream>
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
@@ -24,8 +24,11 @@
 #include "RigidBody.h"
 #include "ExplosionRG.h"
 #include "Player.h"
+#include "SimpleObstacle.h"
+#include "MoveObstacle.h"
 
 using namespace physx;
+using namespace std;
 
 PxDefaultAllocator		gAllocator;
 PxDefaultErrorCallback	gErrorCallback;
@@ -69,6 +72,8 @@ ExplosionRB* explosion;
 WindForceRB* windRB;
 RigidBody* suelo;
 std::vector<RigidBody*> rigidBody;
+SimpleObstacle* obstacle;
+MoveObstacle* obstacleMove;
 
 //Proyecto
 Player* player;
@@ -99,10 +104,15 @@ void initPhysics(bool interactive)
 	
 	//GetCamera()->setDir(0, 0, -100);
 	//Suelo
-	RigidBody* suelo = new RigidBody(false, Vector3(910, -115, 0), Vector3(1000, 100, 20), gScene,gPhysics,0);
+	RigidBody* suelo = new RigidBody(false, Vector3(910, -115, 0), Vector4(0.5,1,0.5,1), Vector3(1000, 100, 20), gScene,gPhysics,0);
+	RigidBody* techo = new RigidBody(false, Vector3(910, 255, 0), Vector4(0.5,1,0.5,1), Vector3(1000, 100, 20), gScene,gPhysics,0);
 	//Player
-	player = new Player(Vector3(0, 0, 0), gScene, gPhysics);	
-	GetCamera()->setTransform(player->getPosition().x + 100, 0, player->getPosition().z + 200);
+	player = new Player(Vector3(0, 0, 0), gScene, gPhysics, rigidBody);
+	generador= new GeneratorRB(player->personaje->getPosition(), Vector3(-100, 0, 0), rigidBody, 0, gScene, gPhysics, 15);
+	GetCamera()->setTransform(player->getPosition().x + 100, 100, player->getPosition().z + 200);
+
+	obstacle = new SimpleObstacle(Vector3(300, 0, 0), Vector3(20, 50, 20), gScene, gPhysics);
+	obstacleMove = new MoveObstacle(Vector3(100, 100, 10), Vector3(100, 0, 10), Vector3(0, 30, 0), particle);
 }
 
 
@@ -131,9 +141,14 @@ void stepPhysics(bool interactive, double t)
 			}
 		}
 	}
+	
+	if (player->personaje->getVelocity().x<=0)
+		cout << "colision";
 
 	player->update(1);
-	GetCamera()->setTransform(player->getPosition().x + 100, 0, player->getPosition().z + 200);
+	generador->update(Vector3(player->personaje->getPosition().x - 15, player->personaje->getPosition().y, player->personaje->getPosition().z));
+	obstacleMove->update();
+	GetCamera()->setTransform(player->getPosition().x + 100, 75, player->getPosition().z + 200);
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);

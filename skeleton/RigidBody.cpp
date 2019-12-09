@@ -1,6 +1,6 @@
 #include "RigidBody.h"
 
-RigidBody::RigidBody(bool Dynamic ,Vector3 pos_, float radius, PxScene* scene_, PxPhysics* physics_, float time) : pos(pos_), desaparecer(time)
+RigidBody::RigidBody(bool Dynamic ,Vector3 pos_, Vector4 color, float radius, PxScene* scene_, PxPhysics* physics_, float time) : pos(pos_), desaparecer(time)
 {
 	Geosphere = true;
 	transform = PxTransform(pos_);
@@ -11,24 +11,19 @@ RigidBody::RigidBody(bool Dynamic ,Vector3 pos_, float radius, PxScene* scene_, 
 		particleDynamic = physics_->createRigidDynamic(transform);
 		particleDynamic->attachShape(*shape);
 		scene_->addActor(*particleDynamic);
-		float colorx = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		float colory = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		float colorz = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		render = new RenderItem(shape, particleDynamic, Vector4(colorx, colory, colorz, 1));
+		render = new RenderItem(shape, particleDynamic, color);
 	}
 
 	else {
 		particleStatic = physics_->createRigidStatic(transform);
 		particleStatic->attachShape(*shape);
 		scene_->addActor(*particleStatic);
-		float colorx = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		float colory = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		float colorz = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		render = new RenderItem(shape, particleStatic, Vector4(colorx, colory, colorz, 1));
+		
+		render = new RenderItem(shape, particleStatic, color);
 	}
 }
 
-RigidBody::RigidBody(bool Dynamic, Vector3 pos_, Vector3 lados, PxScene* scene_, PxPhysics* physics_, float time) :pos(pos_), desaparecer(time)
+RigidBody::RigidBody(bool Dynamic, Vector3 pos_, Vector4 color, Vector3 lados, PxScene* scene_, PxPhysics* physics_, float time) :pos(pos_), desaparecer(time)
 {
 	Geosphere = false;
 	transform = PxTransform(pos_);
@@ -39,20 +34,14 @@ RigidBody::RigidBody(bool Dynamic, Vector3 pos_, Vector3 lados, PxScene* scene_,
 		particleDynamic = physics_->createRigidDynamic(transform);
 		particleDynamic->attachShape(*shape);
 		scene_->addActor(*particleDynamic);
-		float colorx = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		float colory = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		float colorz = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		render = new RenderItem(shape, particleDynamic, Vector4(colorx, colory, colorz, 1));
+		render = new RenderItem(shape, particleDynamic, color);
 	}
 
 	else {
 		particleStatic = physics_->createRigidStatic(transform);
 		particleStatic->attachShape(*shape);
 		scene_->addActor(*particleStatic);
-		float colorx = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		float colory = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		float colorz = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
-		render = new RenderItem(shape, particleStatic, Vector4(colorx, colory, colorz, 1));
+		render = new RenderItem(shape, particleStatic, color);
 	}
 }
 
@@ -83,6 +72,16 @@ PxGeometry RigidBody::getGeo()
 Vector3 RigidBody::getPosition()
 {
 	return particleDynamic->getGlobalPose().p;
+}
+
+Vector3 RigidBody::getPositionStatic()
+{
+	return particleStatic->getGlobalPose().p;
+}
+
+Vector3 RigidBody::getVelocity()
+{
+	return particleDynamic->getLinearVelocity();
 }
 
 PxReal RigidBody::getMass()

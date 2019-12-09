@@ -259,6 +259,7 @@
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="GeneratorRB.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MoveObstacle.cpp" />
     <ClCompile Include="ParticleAnchoredSpring.cpp" />
     <ClCompile Include="ParticleBuoyancy.cpp" />
     <ClCompile Include="ParticleCable.cpp" />
@@ -277,6 +278,7 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="SimpleObstacle.cpp" />
     <ClCompile Include="WindForce.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +288,7 @@
     <ClInclude Include="ExplosionRG.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="GeneratorRB.h" />
+    <ClInclude Include="MoveObstacle.h" />
     <ClInclude Include="ParticleAnchoredSpring.h" />
     <ClInclude Include="ParticleBuoyancy.h" />
     <ClInclude Include="ParticleCable.h" />
@@ -304,6 +307,7 @@
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="SimpleObstacle.h" />
     <ClInclude Include="WindForce.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

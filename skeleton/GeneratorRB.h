@@ -24,14 +24,11 @@ private:
 	PxPhysics* physics;
 	int spawnTime;
 	int spawnTimeAct = 0;
-	ParticleForceGeneratorRB* wind;
-	ParticleForceGeneratorRB* bomb;
-	ParticleForceRegistryRB* registro;
 	std::vector<RigidBody*>& rigb;
 	Vector3 f;
 	Vector3 pos;
 public:
-	GeneratorRB(Vector3 pos, Vector3 force, std::vector<RigidBody*>& rigb_, ParticleForceRegistryRB* registro_, int maxRB_, PxScene* scene, PxPhysics* physics, int spawnTime_, ParticleForceGeneratorRB* wind_, ParticleForceGeneratorRB* bomb_);
-	void update();
+	GeneratorRB(Vector3 pos, Vector3 force, std::vector<RigidBody*>& rigb_,int maxRB_, PxScene* scene, PxPhysics* physics, int spawnTime_);
+	void update(Vector3 pos);
 };
 

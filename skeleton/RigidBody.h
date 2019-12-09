@@ -24,13 +24,15 @@ class RigidBody
 	bool Geosphere;
 	RenderItem* render;
 public:
-	RigidBody(bool Dynamic, Vector3 pos_, float radius, PxScene* scene_, PxPhysics* physics_, float time);
-	RigidBody(bool Dynamic, Vector3 pos_, Vector3 lados, PxScene* scene_, PxPhysics* physics_, float time);
+	RigidBody(bool Dynamic, Vector3 pos_, Vector4 color, float radius, PxScene* scene_, PxPhysics* physics_, float time);
+	RigidBody(bool Dynamic, Vector3 pos_, Vector4 color, Vector3 lados, PxScene* scene_, PxPhysics* physics_, float time);
 	~RigidBody();
 	void addForce(Vector3 f);
 	void setVelocity(Vector3 v);
 	PxGeometry getGeo();
 	Vector3 getPosition();
+	Vector3 getPositionStatic();
+	Vector3 getVelocity();
 	PxReal getMass();
 	float desaparecer;
 	float time = 0;

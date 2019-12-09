@@ -1,9 +1,9 @@
 #include "Player.h"
 
-Player::Player(Vector3 pos, PxScene* scene_, PxPhysics* physics_)
+Player::Player(Vector3 pos, PxScene* scene_, PxPhysics* physics_, std::vector<RigidBody*> trail)
 {
 	scene_->setGravity(Vector3(0.0f, -50.0f, 0.0f));
-	personaje = new RigidBody(true, pos, 10, scene_, physics_, 0);
+	personaje = new RigidBody(true, pos, Vector4(0, 0, 1, 1), 10, scene_, physics_, 0);
 }
 
 void Player::Jump(float forceJump)
