@@ -3,16 +3,19 @@
 #include "Particulas.h"
 #include "RigidBody.h"
 #include "GeneratorRB.h"
+#include "Bullet.h"
 
 class Player
 {
 private:
+	std::vector<Particle*>& particle;
 	GeneratorRB* generator;
 public: 
-	Player(Vector3 pos, PxScene* scene_, PxPhysics* physics_, std::vector<RigidBody*> trail);
+	RigidBody* personaje;
+	Player(Vector3 pos, PxScene* scene_, PxPhysics* physics_, std::vector<Particle*>& particle);
 	void Jump(float forceJump);
 	Vector3 getPosition();
 	void update(float velocityY);
-	RigidBody* personaje;
+	void shoot(std::vector<Bullet*>& bullet);
 };
 

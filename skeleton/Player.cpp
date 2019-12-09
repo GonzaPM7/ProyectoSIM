@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(Vector3 pos, PxScene* scene_, PxPhysics* physics_, std::vector<RigidBody*> trail)
+Player::Player(Vector3 pos, PxScene* scene_, PxPhysics* physics_, std::vector<Particle*>& particle_):particle(particle_)
 {
 	scene_->setGravity(Vector3(0.0f, -50.0f, 0.0f));
 	personaje = new RigidBody(true, pos, Vector4(0, 0, 1, 1), 10, scene_, physics_, 0);
@@ -19,4 +19,9 @@ Vector3 Player::getPosition()
 void Player::update(float velocityY)
 {	
 	personaje->addForce(Vector3(velocityY, 0, 0));
+}
+
+void Player::shoot(std::vector<Bullet*>& bullet)
+{
+	bullet.push_back(new Bullet(personaje->getPosition(), Vector3(100, 0, 0), particle));
 }

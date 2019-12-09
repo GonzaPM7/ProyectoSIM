@@ -34,9 +34,8 @@ public:
 	unsigned type;
 	Payload payload;
 	vector<Particle*>* particulas;
-	ParticleForceRegistry* registro_;
-	Firework(ParticleForceRegistry* registro, PxSphereGeometry geo, Vector3 pos, Vector3 vel, Vector3 ac,
-		float age, float damping, Payload payload, vector<Particle*>* part);
+	Firework(PxSphereGeometry geo, Vector3 pos, Vector3 vel, Vector3 ac,
+		float age, float damping, Payload payload,Vector4 color, vector<Particle*>* part);
 
 
 	virtual ~Firework();

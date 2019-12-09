@@ -3,10 +3,10 @@
 #include "ParticleForceRegistry.h"
 #include "ParticleGravity.h"
 
-Firework::Firework(ParticleForceRegistry* registro, PxSphereGeometry geo, Vector3 pos, Vector3 vel, Vector3 ac,
-	float damping, float a, Payload payload, vector<Particle*>* part)
-	: Particle(a, geo, pos, vel, ac, damping),
-	particulas(part), payload(payload), registro_(registro) {
+Firework::Firework(PxSphereGeometry geo, Vector3 pos, Vector3 vel, Vector3 ac,
+	float damping, float a, Payload payload, Vector4 color, vector<Particle*>* part)
+	: Particle(color, a, geo, pos, vel, ac, damping),
+	particulas(part), payload(payload) {
 }
 
 
@@ -23,9 +23,12 @@ Firework::~Firework() {
 			vy = (float)(rand() % (int)((tipo.vmax - tipo.vmin) * 100) + (int)(tipo.vmin * 100)) / 100.0;
 			vz = (float)(rand() % (int)((tipo.vmax - tipo.vmin) * 100) + (int)(tipo.vmin * 100)) / 100.0;
 
-			Firework* fireWork = new Firework(registro_, PxSphereGeometry(tipo.size),
-				p, { vx, vy, vz }, a, damping, tipo.age, payload, particulas);
-			registro_->add(fireWork, new ParticleGravity(Vector3(0, -0.02, 0)));
+			float colorx = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
+			float colory = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
+			float colorz = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
+
+			Firework* fireWork = new Firework(PxSphereGeometry(tipo.size),
+				p, { vx, vy, vz }, a, damping, tipo.age, payload, Vector4(colorx,colory,colorz, 1), particulas);
 			particulas->push_back(fireWork);
 		}
 	}
@@ -36,21 +39,21 @@ enum Types { ULTIMO, SEGUNDO, PRIMERO };
 FireworkRule::FireworkRule(int type)
 {
 	if (type == ULTIMO) {
-		age = 3;
+		age = 1;
 		vmax = 5;
-		vmin = 1;
+		vmin = 0;
 		size = 1;
 	}
 	else if (type == SEGUNDO) {
-		age = 4;
-		vmax = 10;
-		vmin = 5;
+		age = 1;
+		vmax = 5;
+		vmin = 0;
 		size = 2;
 	}
 	else if (type == PRIMERO) {
-		age = 5;
-		vmax = 15;
-		vmin = 10;
+		age = 1;
+		vmax = 5;
+		vmin = 0;
 		size = 3;
 	}
 }

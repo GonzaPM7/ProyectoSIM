@@ -38,6 +38,12 @@
     <ClCompile Include="MoveObstacle.cpp">
       <Filter>Proyecto</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Proyecto</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Proyecto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -75,6 +81,12 @@
       <Filter>Proyecto</Filter>
     </ClInclude>
     <ClInclude Include="MoveObstacle.h">
+      <Filter>Proyecto</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Proyecto</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
       <Filter>Proyecto</Filter>
     </ClInclude>
   </ItemGroup>
