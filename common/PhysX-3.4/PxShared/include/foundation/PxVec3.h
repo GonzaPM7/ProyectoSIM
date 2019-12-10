@@ -89,7 +89,7 @@ class PxVec3
 	/**
 	\brief Copy ctor.
 	*/
-	PX_CUDA_CALLABLE PX_FORCE_INLINE PxVec3(const PxVec3& v) : x(v.x), y(v.y), z(v.z)
+ 	PX_CUDA_CALLABLE PX_FORCE_INLINE PxVec3(const PxVec3& v) : x(v.x), y(v.y), z(v.z)
 	{
 	}
 

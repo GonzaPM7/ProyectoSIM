@@ -29,6 +29,7 @@ public:
 	~RigidBody();
 	void addForce(Vector3 f);
 	void setVelocity(Vector3 v);
+	void setPosition(Vector3 pos);
 	PxGeometry getGeo();
 	Vector3 getPosition();
 	Vector3 getPositionStatic();

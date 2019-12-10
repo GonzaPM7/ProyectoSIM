@@ -3,11 +3,14 @@
 #include "Particulas.h"
 #include "RigidBody.h"
 #include "Player.h"
-class SimpleObstacle
+#include "ObstacleSystem.h"
+class SimpleObstacle: public ObstacleSystem
 {
 private:
-	RigidBody* Obstacle;
+	Particle* Obstacle;
+	Vector3 lado;
 public:
 	SimpleObstacle(Vector3 pos, Vector3 lados, PxScene* scene_, PxPhysics* physics_);
-	bool colission(RigidBody* player);
+	virtual bool colission(RigidBody* player);
+	virtual void update() {};
 };

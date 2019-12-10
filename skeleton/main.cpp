@@ -28,6 +28,7 @@
 #include "MoveObstacle.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "ObstacleSystem.h"
 
 using namespace physx;
 using namespace std;
@@ -76,11 +77,10 @@ WindForceRB* windRB;
 Player* player;
 RigidBody* suelo;
 std::vector<RigidBody*> rigidBody;
-SimpleObstacle* obstacle;
-MoveObstacle* obstacleMove;
-GeneratorRB* generador;
-Enemy* enemy;
+ParticleGenerator* generador;
 std::vector<Bullet*> bullets;
+std::vector<ObstacleSystem*> obstacles;
+std::vector<Enemy*> enemys;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -111,13 +111,23 @@ void initPhysics(bool interactive)
 	RigidBody* suelo = new RigidBody(false, Vector3(910, -115, 0), Vector4(0.5,1,0.5,1), Vector3(1000, 100, 20), gScene,gPhysics,0);
 	RigidBody* techo = new RigidBody(false, Vector3(910, 255, 0), Vector4(0.5,1,0.5,1), Vector3(1000, 100, 20), gScene,gPhysics,0);
 	//Player
-	player = new Player(Vector3(0, 50, 0), gScene, gPhysics, particle);
-	generador= new GeneratorRB(player->personaje->getPosition(), Vector3(-350, 0, 0), rigidBody, 0, gScene, gPhysics, 15);
+	player = new Player(Vector3(-10, 0, 0), gScene, gPhysics, particle);
+	generador= new ParticleGenerator(15, player->getPosition(), Vector3(-50, 0, 0), particle);
 	GetCamera()->setTransform(player->getPosition().x + 100, 100, player->getPosition().z + 200);
 
-	obstacle = new SimpleObstacle(Vector3(300, 0, 0), Vector3(20, 50, 20), gScene, gPhysics);
-	obstacleMove = new MoveObstacle(Vector3(100, 100, 10), Vector3(100, 0, 10), Vector3(0, 30, 0), particle);
-	enemy = new Enemy(Vector3(200, 50, 0), Vector3(0, 5, 0), particle);
+	obstacles.push_back(new SimpleObstacle(Vector3(100, -25, 0), Vector3(20, 50, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(100, 175, 0), Vector3(20, 50, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(400, 0, 0), Vector3(20, 70, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(700, 0, 0), Vector3(20, 70, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(700, 150, 0), Vector3(20, 20, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(800, -25, 0), Vector3(20, 50, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(800, 150, 0), Vector3(20, 70, 20), gScene, gPhysics));
+
+	obstacles.push_back(new MoveObstacle(Vector3(300, 100, 10), Vector3(300, 0, 10), Vector3(0, 30, 0), particle, 100));
+	obstacles.push_back(new MoveObstacle(Vector3(500, 100, 10), Vector3(500, 50, 10), Vector3(0, 30, 0), particle, 50));
+
+	enemys.push_back(new Enemy(Vector3(200, 50, 0), Vector3(0, 5, 0), particle));
+	enemys.push_back(new Enemy(Vector3(600, 25, 0), Vector3(0, 10, 0), particle));
 }
 
 
@@ -125,6 +135,7 @@ void initPhysics(bool interactive)
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
 void stepPhysics(bool interactive, double t)
+
 {
 	PX_UNUSED(interactive);
 
@@ -147,21 +158,40 @@ void stepPhysics(bool interactive, double t)
 		}
 	} 
 
-	for (int i = 0; i < bullets.size(); i++) {
-		if (bullets[i]->bullet != nullptr) {
-			bullets[i]->update(enemy);
+	for (int i = 0; i < obstacles.size(); i++) {
+		if (obstacles[i] != nullptr) {
+			obstacles[i]->update();
+			if (obstacles[i]->colission(player->personaje)) {
+				cout << "colision";
+				player->personaje->setPosition(Vector3(0, 50, 0));
+				GetCamera()->setTransform(0, 50, 0);
+			}
 		}
 	}
 
-	if (player->personaje->getVelocity().x<=0)
-		cout << "colision";
+	for (int i = 0; i < bullets.size(); i++) {
+		if (bullets[i]->bullet != nullptr) {
+			for (int x = 0; x < enemys.size(); x++) {
+				if (enemys[x]->personaje != nullptr)
+					bullets[i]->update(enemys[x]);
+			}
+		}
+	}
 
-	player->update(1);
-	generador->update(Vector3(player->personaje->getPosition().x - 15, player->personaje->getPosition().y, player->personaje->getPosition().z));
-	obstacleMove->update();
+	for (int i = 0; i < enemys.size(); i++) {
+		if (enemys[i]->personaje != nullptr) {
+			enemys[i]->update();
+			if (enemys[i]->colission(player->personaje)) {
+				cout << "colision";
+				player->personaje->setPosition(Vector3(0, 50, 0));
+				GetCamera()->setTransform(0, 50, 0);
+			}
+		}
+	}
+
+	player->update(2);
+	generador->update(Vector3(player->personaje->getPosition().x - 15, player->personaje->getPosition().y, player->personaje->getPosition().z));	
 	GetCamera()->setTransform(player->getPosition().x + 100, 75, player->getPosition().z + 200);
-	if(enemy->personaje!=nullptr)
-		enemy->update();
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);

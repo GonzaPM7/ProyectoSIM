@@ -262,6 +262,7 @@
     <ClCompile Include="GeneratorRB.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveObstacle.cpp" />
+    <ClCompile Include="ObstacleSystem.cpp" />
     <ClCompile Include="ParticleAnchoredSpring.cpp" />
     <ClCompile Include="ParticleBuoyancy.cpp" />
     <ClCompile Include="ParticleCable.cpp" />
@@ -293,6 +294,7 @@
     <ClInclude Include="Firework.h" />
     <ClInclude Include="GeneratorRB.h" />
     <ClInclude Include="MoveObstacle.h" />
+    <ClInclude Include="ObstacleSystem.h" />
     <ClInclude Include="ParticleAnchoredSpring.h" />
     <ClInclude Include="ParticleBuoyancy.h" />
     <ClInclude Include="ParticleCable.h" />

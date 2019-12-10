@@ -44,6 +44,7 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Proyecto</Filter>
     </ClCompile>
+    <ClCompile Include="ObstacleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>Proyecto</Filter>
     </ClInclude>
+    <ClInclude Include="ObstacleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

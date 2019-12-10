@@ -34,8 +34,8 @@ Particle::Particle(Vector4 color, float a, PxSphereGeometry geo, Vector3 positio
 	frame = 0;
 }
 
-Particle::Particle(Vector4 color, float a, PxBoxGeometry geo, Vector3 position, Vector3 velocity, Vector3 acceleration, float damping):
-	age_(a), p(position), v(velocity), a(acceleration), damping(damping)
+Particle::Particle(Vector4 color, bool dead_, float a, PxBoxGeometry geo, Vector3 position, Vector3 velocity, Vector3 acceleration, float damping):
+	age_(a), p(position), v(velocity), a(acceleration), damping(damping), dead(dead_)
 {
 	PxShape* shape = CreateShape(geo);
 	transform = new PxTransform(position);
@@ -141,8 +141,11 @@ void Particle::dele()
 bool Particle::update(float time)
 {
 	integrate(time);
-	age_ -= time;
-	return age_ < 0.0;
+	if (dead) {
+		age_ -= time;
+		return age_ < 0.0;
+	}
+	return false;
 }
 
 int Particle::getRadius()

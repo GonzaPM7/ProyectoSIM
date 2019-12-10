@@ -22,4 +22,9 @@ void Enemy::dead()
 	personaje->~Particle();
 	personaje = nullptr;
 }
+
+bool Enemy::colission(RigidBody* player)
+{
+	return PxGeometryQuery::overlap(player->getGeo(), PxTransform(player->getPosition()), PxSphereGeometry(10), PxTransform(personaje->getPosition()));
+}
  

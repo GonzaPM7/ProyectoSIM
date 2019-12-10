@@ -16,7 +16,7 @@ public:
 	Particle(float a,PxSphereGeometry geo, Vector3 position, Vector3 velocity, Vector3 acceleration, float damping);
 	Particle(int radius, Vector4 color, float a, Vector3 position, Vector3 velocity, Vector3 acceleration, float damping);
 	Particle(Vector4 color, float a,PxSphereGeometry geo, Vector3 position, Vector3 velocity, Vector3 acceleration, float damping);
-	Particle(Vector4 color, float a, PxBoxGeometry geo, Vector3 position, Vector3 velocity, Vector3 acceleration, float damping);
+	Particle(Vector4 color, bool dead, float a, PxBoxGeometry geo, Vector3 position, Vector3 velocity, Vector3 acceleration, float damping);
 	virtual ~Particle();
 	// Position in world space
 	Vector3 p;
@@ -70,4 +70,5 @@ public:
 	int getRadius();
 
 	int radius_;
+	bool dead = true;
 };
