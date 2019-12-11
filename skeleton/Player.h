@@ -10,6 +10,7 @@ class Player
 private:
 	std::vector<Particle*>& particle;
 	GeneratorRB* generator;
+	int points = 0;
 public: 
 	RigidBody* personaje;
 	Player(Vector3 pos, PxScene* scene_, PxPhysics* physics_, std::vector<Particle*>& particle);
@@ -17,5 +18,9 @@ public:
 	Vector3 getPosition();
 	void update(float velocityY);
 	void shoot(std::vector<Bullet*>& bullet);
+	void dead();
+	void increPoints();
+	void showPoints();
+	void clearPoints();
 };
 
