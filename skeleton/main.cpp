@@ -29,6 +29,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "ObstacleSystem.h"
+#include "WaterObstacle.h"
 
 using namespace physx;
 using namespace std;
@@ -54,7 +55,6 @@ std::vector<Firework*> fireworks;
 float spawnTime = 0;
 float spawn = 30;
 int posX = 0;
-ParticleForceRegistry* registro;
 WindForce* wind;
 Bomba* bomb;
 ParticleAnchoredSpring* anchored;
@@ -81,6 +81,7 @@ ParticleGenerator* generador;
 std::vector<Bullet*> bullets;
 std::vector<ObstacleSystem*> obstacles;
 std::vector<Enemy*> enemys;
+ParticleForceRegistry* registro;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -113,6 +114,7 @@ void initPhysics(bool interactive)
 	//Player
 	player = new Player(Vector3(-10, 0, 0), gScene, gPhysics, particle);
 	generador= new ParticleGenerator(15, player->getPosition(), Vector3(-50, 0, 0), particle);
+	registro = new ParticleForceRegistry();
 	GetCamera()->setTransform(player->getPosition().x + 100, 100, player->getPosition().z + 200);
 
 	obstacles.push_back(new SimpleObstacle(Vector3(100, -25, 0), Vector3(20, 50, 20), gScene, gPhysics));
@@ -128,6 +130,8 @@ void initPhysics(bool interactive)
 
 	enemys.push_back(new Enemy(Vector3(200, 50, 0), Vector3(0, 5, 0), particle));
 	enemys.push_back(new Enemy(Vector3(600, 25, 0), Vector3(0, 10, 0), particle));
+
+	obstacles.push_back(new WaterObstacle(Vector3(200, -10, 10), registro, particle));
 }
 
 
@@ -188,7 +192,7 @@ void stepPhysics(bool interactive, double t)
 			}
 		}
 	}
-
+	registro->updateForces(1);
 	player->update(2);
 	generador->update(Vector3(player->personaje->getPosition().x - 15, player->personaje->getPosition().y, player->personaje->getPosition().z));	
 	GetCamera()->setTransform(player->getPosition().x + 100, 75, player->getPosition().z + 200);

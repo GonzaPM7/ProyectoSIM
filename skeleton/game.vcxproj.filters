@@ -44,7 +44,12 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Proyecto</Filter>
     </ClCompile>
-    <ClCompile Include="ObstacleSystem.cpp" />
+    <ClCompile Include="ObstacleSystem.cpp">
+      <Filter>Proyecto</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterObstacle.cpp">
+      <Filter>Proyecto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -90,7 +95,12 @@
     <ClInclude Include="Enemy.h">
       <Filter>Proyecto</Filter>
     </ClInclude>
-    <ClInclude Include="ObstacleSystem.h" />
+    <ClInclude Include="ObstacleSystem.h">
+      <Filter>Proyecto</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterObstacle.h">
+      <Filter>Proyecto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

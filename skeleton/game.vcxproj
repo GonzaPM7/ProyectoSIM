@@ -282,6 +282,7 @@
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="SimpleObstacle.cpp" />
+    <ClCompile Include="WaterObstacle.cpp" />
     <ClCompile Include="WindForce.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +315,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="SimpleObstacle.h" />
+    <ClInclude Include="WaterObstacle.h" />
     <ClInclude Include="WindForce.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

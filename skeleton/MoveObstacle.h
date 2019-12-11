@@ -16,5 +16,6 @@ public:
 	MoveObstacle(Vector3 pos1, Vector3 pos2, Vector3 vel, std::vector<Particle*>& particle, int distan);
 	virtual void update();
 	virtual bool colission(RigidBody* player);
+	bool colision2(RigidBody* player);
 };
 

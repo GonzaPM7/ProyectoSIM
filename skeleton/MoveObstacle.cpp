@@ -25,8 +25,13 @@ bool MoveObstacle::colission(RigidBody* player)
 {
 	if (PxGeometryQuery::overlap(player->getGeo(), PxTransform(player->getPosition()), PxBoxGeometry(10+5, 10+5, 20), PxTransform(particula1->getPosition())))
 		return true;
-	/*if (PxGeometryQuery::overlap(player->getGeo(), PxTransform(player->getPosition()), PxBoxGeometry(10+5, 10+5, 20), PxTransform(particula2->getPosition())))
-		return true;*/
+	return colision2(player);
+}
+
+bool MoveObstacle::colision2(RigidBody* player)
+{
+	if (PxGeometryQuery::overlap(player->getGeo(), PxTransform(player->getPosition()), PxBoxGeometry(10 + 5, 10 + 5, 20), PxTransform(particula2->getPosition())))
+		return true;
 
 	return false;
 }
