@@ -11,6 +11,8 @@ private:
 	std::vector<Particle*>& particle;
 	GeneratorRB* generator;
 	int points = 0;
+	int pointlevel = 0;
+	int level = 1;
 public: 
 	RigidBody* personaje;
 	Player(Vector3 pos, PxScene* scene_, PxPhysics* physics_, std::vector<Particle*>& particle);
@@ -22,5 +24,6 @@ public:
 	void increPoints();
 	void showPoints();
 	void clearPoints();
+	void nextLevel();
 };
 

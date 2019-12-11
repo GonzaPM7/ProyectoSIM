@@ -30,6 +30,7 @@
 #include "Bullet.h"
 #include "ObstacleSystem.h"
 #include "WaterObstacle.h"
+#include "Win.h"
 
 using namespace physx;
 using namespace std;
@@ -81,6 +82,7 @@ ParticleGenerator* generador;
 std::vector<Bullet*> bullets;
 std::vector<ObstacleSystem*> obstacles;
 std::vector<Enemy*> enemys;
+std::vector<Win*> win;
 ParticleForceRegistry* registro;
 
 // Initialize physics engine
@@ -107,17 +109,17 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 	
 	
-	//GetCamera()->setDir(0, 0, -100);
 	//Suelo
-	RigidBody* suelo = new RigidBody(false, Vector3(910, -115, 0), Vector4(0.5,1,0.5,1), Vector3(1000, 100, 20), gScene,gPhysics,0);
-	RigidBody* techo = new RigidBody(false, Vector3(910, 255, 0), Vector4(0.5,1,0.5,1), Vector3(1000, 100, 20), gScene,gPhysics,0);
+	RigidBody* suelo = new RigidBody(false, Vector3(1910, -115, 0), Vector4(0.5,1,0.5,1), Vector3(2050, 100, 25), gScene,gPhysics,0);
+	RigidBody* techo = new RigidBody(false, Vector3(1910, 255, 0), Vector4(0.5,1,0.5,1), Vector3(2050, 100, 25), gScene,gPhysics,0);
 	//Player
-	player = new Player(Vector3(-10, 0, 0), gScene, gPhysics, particle);
+	player = new Player(Vector3(-10, 50, 0), gScene, gPhysics, particle); //Segundo Nivel -335
 	player->showPoints();
 	generador= new ParticleGenerator(15, player->getPosition(), Vector3(-50, 0, 0), particle);
 	registro = new ParticleForceRegistry();
-	GetCamera()->setTransform(player->getPosition().x + 100, 100, player->getPosition().z + 200);
+	GetCamera()->setTransform(player->getPosition().x + 100, 75, player->getPosition().z + 200);
 
+	//LEVEL 1
 	obstacles.push_back(new SimpleObstacle(Vector3(100, -25, 0), Vector3(20, 50, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(100, 175, 0), Vector3(20, 50, 20), gScene, gPhysics));
 	enemys.push_back(new Enemy(Vector3(200, 50, 0), Vector3(0, 5, 0), particle));
@@ -125,7 +127,9 @@ void initPhysics(bool interactive)
 	obstacles.push_back(new MoveObstacle(Vector3(300, 100, 10), Vector3(300, 0, 10), Vector3(0, 30, 0), particle, 100));
 	obstacles.push_back(new SimpleObstacle(Vector3(400, 0, 0), Vector3(20, 70, 20), gScene, gPhysics));
 	obstacles.push_back(new MoveObstacle(Vector3(500, 100, 10), Vector3(500, 50, 10), Vector3(0, 30, 0), particle, 50));
+	obstacles.push_back(new WaterObstacle(Vector3(500, 150, 10), registro, particle));
 	enemys.push_back(new Enemy(Vector3(600, 25, 0), Vector3(0, 10, 0), particle));
+	obstacles.push_back(new WaterObstacle(Vector3(600, -10, 10), registro, particle));
 	obstacles.push_back(new SimpleObstacle(Vector3(700, 0, 0), Vector3(20, 70, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(700, 150, 0), Vector3(20, 20, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(800, -25, 0), Vector3(20, 50, 20), gScene, gPhysics));
@@ -136,6 +140,33 @@ void initPhysics(bool interactive)
 	obstacles.push_back(new MoveObstacle(Vector3(1000, 100, 10), Vector3(1000, 0, 10), Vector3(0, 10, 0), particle, 100));
 	obstacles.push_back(new SimpleObstacle(Vector3(1100, 155, 0), Vector3(20, 50, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(1100, 0, 0), Vector3(20, 70, 20), gScene, gPhysics));
+	obstacles.push_back(new MoveObstacle(Vector3(1200, 100, 10), Vector3(1200, 0, 10), Vector3(0, 30, 0), particle, 100));
+	obstacles.push_back(new SimpleObstacle(Vector3(1300, 0, 0), Vector3(20, 100, 20), gScene, gPhysics));
+	obstacles.push_back(new WaterObstacle(Vector3(1400, -10, 10), registro, particle));
+	obstacles.push_back(new SimpleObstacle(Vector3(1400, 105, 0), Vector3(20, 50, 20), gScene, gPhysics));
+	enemys.push_back(new Enemy(Vector3(1500, 50, 0), Vector3(0, 15, 0), particle));
+	enemys.push_back(new Enemy(Vector3(1500, 50, 0), Vector3(0, 5, 0), particle));
+	obstacles.push_back(new MoveObstacle(Vector3(1600, 100, 10), Vector3(1500, 50, 10), Vector3(0, 50, 0), particle, 50));
+	obstacles.push_back(new WaterObstacle(Vector3(1600, 150, 10), registro, particle));
+	obstacles.push_back(new SimpleObstacle(Vector3(1700, 115, 0), Vector3(20, 50, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(1700, 0, 0), Vector3(20, 30, 20), gScene, gPhysics));
+	enemys.push_back(new Enemy(Vector3(1800, 50, 0), Vector3(0, 15, 0), particle));
+	enemys.push_back(new Enemy(Vector3(1800, 50, 0), Vector3(0, 5, 0), particle));
+	enemys.push_back(new Enemy(Vector3(1800, 50, 0), Vector3(0, 25, 0), particle));
+	obstacles.push_back(new SimpleObstacle(Vector3(1900, 155, 0), Vector3(20, 40, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(1900, 30, 0), Vector3(20, 40, 20), gScene, gPhysics));
+	win.push_back(new Win(Vector3(1950, 75, 0), Vector3(20, 155, 20), false));
+
+	//LEVEL 2
+	obstacles.push_back(new SimpleObstacle(Vector3(2100, 0, 0), Vector3(20, 20, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(2100, 120, 0), Vector3(20, 50, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(2200, 100, 0), Vector3(20, 70, 20), gScene, gPhysics));
+	obstacles.push_back(new MoveObstacle(Vector3(2300, 100, 10), Vector3(2300, 50, 10), Vector3(0, 30, 0), particle, 50));
+	enemys.push_back(new Enemy(Vector3(2400, 50, 0), Vector3(0, 15, 0), particle));
+	enemys.push_back(new Enemy(Vector3(2400, 50, 0), Vector3(0, 5, 0), particle));
+	enemys.push_back(new Enemy(Vector3(2400, 50, 0), Vector3(0, 25, 0), particle));
+	obstacles.push_back(new WaterObstacle(Vector3(2400, -10, 10), registro, particle));
+	obstacles.push_back(new MoveObstacle(Vector3(2500, 100, 10), Vector3(2550, 50, 10), Vector3(0, 30, 0), particle, 100));
 }
 
 
@@ -143,7 +174,6 @@ void initPhysics(bool interactive)
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
 void stepPhysics(bool interactive, double t)
-
 {
 	PX_UNUSED(interactive);
 
@@ -179,7 +209,8 @@ void stepPhysics(bool interactive, double t)
 		if (bullets[i]->bullet != nullptr) {
 			for (int x = 0; x < enemys.size(); x++) {
 				if (enemys[x]->personaje != nullptr)
-					bullets[i]->update(enemys[x]);
+					if (bullets[i]->update(enemys[x]))
+						player->increPoints();
 			}
 		}
 	}
@@ -191,6 +222,10 @@ void stepPhysics(bool interactive, double t)
 				player->dead();
 			}
 		}
+	}
+
+	for (int i = 0; i < win.size(); i++) {
+		win[i]->colission(player);
 	}
 	registro->updateForces(1);
 	player->update(2);
@@ -224,11 +259,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	//case 'B': break;
-	//case ' ':	break;
 	case ' ':
 	{
-		player->Jump(3000);
+		player->Jump(5000);
 		break;
 	}
 	case 'C':

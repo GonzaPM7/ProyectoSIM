@@ -21,7 +21,7 @@ void Player::update(float velocityY)
 	if (personaje->getVelocity().x < 50) {
 		personaje->addForce(Vector3(velocityY, 0, 0));
 	}
-	GetCamera()->setTransform(getPosition().x + 100, 75, getPosition().z + 200);
+	GetCamera()->setTransform(getPosition().x + 100, 75, getPosition().z + 200); //Segundo Nivel -335
 }
 
 void Player::shoot(std::vector<Bullet*>& bullet)
@@ -31,10 +31,17 @@ void Player::shoot(std::vector<Bullet*>& bullet)
 
 void Player::dead()
 {
-	personaje->setPosition(Vector3(0, 50, 0));
+	if (level == 1){
+		personaje->setPosition(Vector3(0, 50, 0));
+		GetCamera()->setTransform(0, 75, 0);
+	}
+	else if (level == 2) {
+		personaje->setPosition(Vector3(2000, 50, 0));
+		GetCamera()->setTransform(2000, 75, 0);
+	}
 	personaje->setVelocity(Vector3(0, 0, 0));
-	GetCamera()->setTransform(0, 50, 0);
 	clearPoints();
+	showPoints();
 }
 
 void Player::increPoints()
@@ -50,5 +57,11 @@ void Player::showPoints()
 
 void Player::clearPoints()
 {
-	points = 0;
+	points = pointlevel;
+}
+
+void Player::nextLevel()
+{
+	level = 2;
+	pointlevel = points;
 }

@@ -24,7 +24,7 @@ bool WaterObstacle::colission(RigidBody* player)
 
 bool WaterObstacle::colision2(RigidBody* player)
 {
-	if (PxGeometryQuery::overlap(player->getGeo(), PxTransform(player->getPosition()), PxBoxGeometry(50 + 5, 1 + 5, 50), PxTransform(water->getPosition())))
+	if (PxGeometryQuery::overlap(player->getGeo(), PxTransform(player->getPosition()), PxBoxGeometry(80 + 5, 1 + 5, 20), PxTransform(water->getPosition())))
 		return true;
 
 	return false;

@@ -50,6 +50,9 @@
     <ClCompile Include="WaterObstacle.cpp">
       <Filter>Proyecto</Filter>
     </ClCompile>
+    <ClCompile Include="Win.cpp">
+      <Filter>Proyecto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -99,6 +102,9 @@
       <Filter>Proyecto</Filter>
     </ClInclude>
     <ClInclude Include="WaterObstacle.h">
+      <Filter>Proyecto</Filter>
+    </ClInclude>
+    <ClInclude Include="Win.h">
       <Filter>Proyecto</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,9 +13,9 @@ MoveObstacle::MoveObstacle(Vector3 pos1, Vector3 pos2, Vector3 vel_, std::vector
 
 void MoveObstacle::update()
 {
-	if (particula2->getPosition().y <= 0)
+	if (particula2->getPosition().y <= 0 || particula1->getPosition().y <= 0)
 		subir = +1;
-	if (particula1->getPosition().y >= 145)
+	if (particula1->getPosition().y >= 145 || particula2->getPosition().y >= 145)
 		subir = -1;
 	particula1->setVelocity(Vector3(0, velocity.y * subir, 0));
 	barra->update(true);

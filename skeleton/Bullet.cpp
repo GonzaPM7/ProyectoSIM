@@ -6,11 +6,13 @@ Bullet::Bullet(Vector3 pos, Vector3 vel, std::vector<Particle*>& particle)
 	particle.push_back(bullet);
 }
 
-void Bullet::update(Enemy* enemy)
+bool Bullet::update(Enemy* enemy)
 {
 	if (enemy->personaje != nullptr) {
 		if (PxGeometryQuery::overlap(PxBoxGeometry(3, 1, 1), PxTransform(bullet->getPosition()), PxSphereGeometry(enemy->personaje->getRadius()), PxTransform(enemy->personaje->getPosition()))) {
 			enemy->dead();
+			return true;
 		}
 	}
+	return false;
 }
