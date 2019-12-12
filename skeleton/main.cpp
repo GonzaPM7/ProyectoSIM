@@ -113,7 +113,7 @@ void initPhysics(bool interactive)
 	RigidBody* suelo = new RigidBody(false, Vector3(1910, -115, 0), Vector4(0.5,1,0.5,1), Vector3(2050, 100, 25), gScene,gPhysics,0);
 	RigidBody* techo = new RigidBody(false, Vector3(1910, 255, 0), Vector4(0.5,1,0.5,1), Vector3(2050, 100, 25), gScene,gPhysics,0);
 	//Player
-	player = new Player(Vector3(-10, 50, 0), gScene, gPhysics, particle); //Segundo Nivel -335
+	player = new Player(Vector3(1950, 50, 0), gScene, gPhysics, particle); //Segundo Nivel -335
 	player->showPoints();
 	generador= new ParticleGenerator(15, player->getPosition(), Vector3(-50, 0, 0), particle);
 	registro = new ParticleForceRegistry();
@@ -161,12 +161,43 @@ void initPhysics(bool interactive)
 	obstacles.push_back(new SimpleObstacle(Vector3(2100, 0, 0), Vector3(20, 20, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(2100, 120, 0), Vector3(20, 50, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(2200, 100, 0), Vector3(20, 70, 20), gScene, gPhysics));
+	obstacles.push_back(new WaterObstacle(Vector3(2200, -10, 10), registro, particle));
 	obstacles.push_back(new MoveObstacle(Vector3(2300, 100, 10), Vector3(2300, 50, 10), Vector3(0, 30, 0), particle, 50));
 	enemys.push_back(new Enemy(Vector3(2400, 50, 0), Vector3(0, 15, 0), particle));
 	enemys.push_back(new Enemy(Vector3(2400, 50, 0), Vector3(0, 5, 0), particle));
 	enemys.push_back(new Enemy(Vector3(2400, 50, 0), Vector3(0, 25, 0), particle));
 	obstacles.push_back(new WaterObstacle(Vector3(2400, -10, 10), registro, particle));
 	obstacles.push_back(new MoveObstacle(Vector3(2500, 100, 10), Vector3(2550, 50, 10), Vector3(0, 30, 0), particle, 100));
+	obstacles.push_back(new SimpleObstacle(Vector3(2650, 0, 0), Vector3(20, 100, 20), gScene, gPhysics));
+	obstacles.push_back(new WaterObstacle(Vector3(2650, 150, 10), registro, particle));
+	obstacles.push_back(new MoveObstacle(Vector3(2750, 100, 10), Vector3(2700, 50, 10), Vector3(0, 30, 0), particle, 50));
+	obstacles.push_back(new SimpleObstacle(Vector3(2800, 0, 0), Vector3(20, 20, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(2800, 120, 0), Vector3(20, 50, 20), gScene, gPhysics));
+	obstacles.push_back(new WaterObstacle(Vector3(2900, 150, 10), registro, particle));
+	obstacles.push_back(new WaterObstacle(Vector3(2900, -10, 10), registro, particle));
+	obstacles.push_back(new MoveObstacle(Vector3(2900, 100, 10), Vector3(2900, 50, 10), Vector3(0, 10, 0), particle, 50));
+	obstacles.push_back(new SimpleObstacle(Vector3(3000, 75, 0), Vector3(80, 20, 20), gScene, gPhysics));
+	obstacles.push_back(new WaterObstacle(Vector3(3000, 150, 10), registro, particle));
+	obstacles.push_back(new WaterObstacle(Vector3(3000, -10, 10), registro, particle));
+	enemys.push_back(new Enemy(Vector3(3100, 50, 0), Vector3(0, 15, 0), particle));
+	enemys.push_back(new Enemy(Vector3(3100, 50, 0), Vector3(0, 35, 0), particle));
+	obstacles.push_back(new SimpleObstacle(Vector3(3200, 0, 0), Vector3(20, 60, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(3200, 155, 0), Vector3(20, 60, 20), gScene, gPhysics));
+	obstacles.push_back(new MoveObstacle(Vector3(3300, 100, 10), Vector3(3350, 50, 10), Vector3(0, 10, 0), particle, 50));
+	enemys.push_back(new Enemy(Vector3(3400, 50, 0), Vector3(0, 50, 0), particle));
+	obstacles.push_back(new SimpleObstacle(Vector3(3400, 0, 0), Vector3(80, 40, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(3400, 155, 0), Vector3(80, 40, 20), gScene, gPhysics));
+	obstacles.push_back(new SimpleObstacle(Vector3(3550, 40, 0), Vector3(20, 80, 20), gScene, gPhysics));
+	obstacles.push_back(new WaterObstacle(Vector3(3650, 150, 10), registro, particle));
+	obstacles.push_back(new WaterObstacle(Vector3(3650, -10, 10), registro, particle));
+	enemys.push_back(new Enemy(Vector3(3650, 50, 0), Vector3(0, 70, 0), particle));
+	enemys.push_back(new Enemy(Vector3(3650, 50, 0), Vector3(0, 50, 0), particle));
+	obstacles.push_back(new MoveObstacle(Vector3(3700, 100, 10), Vector3(3700, 50, 10), Vector3(0, 30, 0), particle, 50));
+	obstacles.push_back(new SimpleObstacle(Vector3(3800, 130, 0), Vector3(20, 80, 20), gScene, gPhysics));
+	obstacles.push_back(new MoveObstacle(Vector3(3850, 100, 10), Vector3(3900, 50, 10), Vector3(0, 10, 0), particle, 50));
+	obstacles.push_back(new SimpleObstacle(Vector3(4000, 75, 0), Vector3(80, 40, 20), gScene, gPhysics));
+	obstacles.push_back(new WaterObstacle(Vector3(4000, 150, 10), registro, particle));
+	obstacles.push_back(new WaterObstacle(Vector3(4000, -10, 10), registro, particle));
 }
 
 
