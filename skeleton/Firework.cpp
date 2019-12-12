@@ -28,7 +28,7 @@ Firework::~Firework() {
 			float colorz = (float)(rand() % (int)((1 - 0) * 100) + (int)(0 * 100)) / 100.0;
 
 			Firework* fireWork = new Firework(PxSphereGeometry(tipo.size),
-				p, { vx, vy, vz }, a, damping, tipo.age, payload, Vector4(colorx,colory,colorz, 1), particulas);
+				p, { vx, vy, vz }, Vector3(0,0,0), damping, tipo.age, payload, Vector4(colorx,colory,colorz, 1), particulas);
 			particulas->push_back(fireWork);
 		}
 	}

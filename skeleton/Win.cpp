@@ -1,5 +1,6 @@
 #include "Win.h"
 #include <iostream>
+#include "Firework.h"
 
 Win::Win(Vector3 pos, Vector3 lados_, bool win_):lados(lados_), win(win_)
 {
@@ -9,11 +10,12 @@ Win::Win(Vector3 pos, Vector3 lados_, bool win_):lados(lados_), win(win_)
 void Win::colission(Player*& player)
 {
 	if (PxGeometryQuery::overlap(player->personaje->getGeo(), PxTransform(player->personaje->getPosition()), PxBoxGeometry(lados.x + 5, lados.y + 10 + 5, lados.z), PxTransform(hit->getPosition()))) {
-		if (win)
-			std::cout << "VICTORY ROYALE";
+		if (win) {
+			std::cout << "    VICTORY ROYALE   :D  ";
+			player->victory = true;
+		}
 		else {
 			player->nextLevel();
 		}
-
 	}
 }

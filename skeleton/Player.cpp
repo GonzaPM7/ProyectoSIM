@@ -17,7 +17,7 @@ Vector3 Player::getPosition()
 }
 
 void Player::update(float velocityY)
-{	
+{		
 	if (personaje->getVelocity().x < 50) {
 		personaje->addForce(Vector3(velocityY, 0, 0));
 	}
@@ -65,3 +65,13 @@ void Player::nextLevel()
 	level = 2;
 	pointlevel = points;
 }
+
+void Player::restart()
+{
+	level = 1;
+	personaje->setPosition(Vector3(-10, 50, 0));
+	victory = false;
+	respawnFirework = 0;
+	numFirework = 0;
+}
+

@@ -84,42 +84,11 @@ std::vector<ObstacleSystem*> obstacles;
 std::vector<Enemy*> enemys;
 std::vector<Win*> win;
 ParticleForceRegistry* registro;
+Payload payload = Payload(3, 5);
 
-// Initialize physics engine
-void initPhysics(bool interactive)
-{
-	PX_UNUSED(interactive);
+//Metodos del Juego
 
-	gFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gAllocator, gErrorCallback);
-
-	gPvd = PxCreatePvd(*gFoundation);
-	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
-	gPvd->connect(*transport,PxPvdInstrumentationFlag::eALL);
-
-	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
-
-	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
-	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
-	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
-	gDispatcher = PxDefaultCpuDispatcherCreate(2);
-	sceneDesc.cpuDispatcher = gDispatcher;
-	sceneDesc.filterShader = contactReportFilterShader;
-	sceneDesc.simulationEventCallback = &gContactReportCallback;
-	gScene = gPhysics->createScene(sceneDesc);
-	
-	
-	//Suelo
-	RigidBody* suelo = new RigidBody(false, Vector3(1910, -115, 0), Vector4(0.5,1,0.5,1), Vector3(2050, 100, 25), gScene,gPhysics,0);
-	RigidBody* techo = new RigidBody(false, Vector3(1910, 255, 0), Vector4(0.5,1,0.5,1), Vector3(2050, 100, 25), gScene,gPhysics,0);
-	//Player
-	player = new Player(Vector3(1950, 50, 0), gScene, gPhysics, particle); //Segundo Nivel -335
-	player->showPoints();
-	generador= new ParticleGenerator(15, player->getPosition(), Vector3(-50, 0, 0), particle);
-	registro = new ParticleForceRegistry();
-	GetCamera()->setTransform(player->getPosition().x + 100, 75, player->getPosition().z + 200);
-
-	//LEVEL 1
+void Level1() {
 	obstacles.push_back(new SimpleObstacle(Vector3(100, -25, 0), Vector3(20, 50, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(100, 175, 0), Vector3(20, 50, 20), gScene, gPhysics));
 	enemys.push_back(new Enemy(Vector3(200, 50, 0), Vector3(0, 5, 0), particle));
@@ -155,9 +124,9 @@ void initPhysics(bool interactive)
 	enemys.push_back(new Enemy(Vector3(1800, 50, 0), Vector3(0, 25, 0), particle));
 	obstacles.push_back(new SimpleObstacle(Vector3(1900, 155, 0), Vector3(20, 40, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(1900, 30, 0), Vector3(20, 40, 20), gScene, gPhysics));
-	win.push_back(new Win(Vector3(1950, 75, 0), Vector3(20, 155, 20), false));
-
-	//LEVEL 2
+	win.push_back(new Win(Vector3(1950, 75, 0), Vector3(10, 155, 20), false));
+}
+void Level2() {
 	obstacles.push_back(new SimpleObstacle(Vector3(2100, 0, 0), Vector3(20, 20, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(2100, 120, 0), Vector3(20, 50, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(2200, 100, 0), Vector3(20, 70, 20), gScene, gPhysics));
@@ -170,7 +139,6 @@ void initPhysics(bool interactive)
 	obstacles.push_back(new MoveObstacle(Vector3(2500, 100, 10), Vector3(2550, 50, 10), Vector3(0, 30, 0), particle, 100));
 	obstacles.push_back(new SimpleObstacle(Vector3(2650, 0, 0), Vector3(20, 100, 20), gScene, gPhysics));
 	obstacles.push_back(new WaterObstacle(Vector3(2650, 150, 10), registro, particle));
-	obstacles.push_back(new MoveObstacle(Vector3(2750, 100, 10), Vector3(2700, 50, 10), Vector3(0, 30, 0), particle, 50));
 	obstacles.push_back(new SimpleObstacle(Vector3(2800, 0, 0), Vector3(20, 20, 20), gScene, gPhysics));
 	obstacles.push_back(new SimpleObstacle(Vector3(2800, 120, 0), Vector3(20, 50, 20), gScene, gPhysics));
 	obstacles.push_back(new WaterObstacle(Vector3(2900, 150, 10), registro, particle));
@@ -198,17 +166,11 @@ void initPhysics(bool interactive)
 	obstacles.push_back(new SimpleObstacle(Vector3(4000, 75, 0), Vector3(80, 40, 20), gScene, gPhysics));
 	obstacles.push_back(new WaterObstacle(Vector3(4000, 150, 10), registro, particle));
 	obstacles.push_back(new WaterObstacle(Vector3(4000, -10, 10), registro, particle));
+	win.push_back(new Win(Vector3(4100, 75, 0), Vector3(10, 155, 20), true));
 }
 
-
-// Function to configure what happens in each step of physics
-// interactive: true if the game is rendering, false if it offline
-// t: time passed since last call in milliseconds
-void stepPhysics(bool interactive, double t)
-{
-	PX_UNUSED(interactive);
-
-	for (int i = 0; i < particle.size(); i++ ) {
+void updateParticle(double t) {
+	for (int i = 0; i < particle.size(); i++) {
 		if (particle[i] != nullptr) {
 			if (particle[i]->update(t)) {
 				delete particle[i];
@@ -216,7 +178,8 @@ void stepPhysics(bool interactive, double t)
 			}
 		}
 	}
-
+}
+void updateRigidbody() {
 	for (int i = 0; i < rigidBody.size(); i++) {
 		if (rigidBody[i] != nullptr) {
 			rigidBody[i]->time += 0.1;
@@ -225,8 +188,9 @@ void stepPhysics(bool interactive, double t)
 				rigidBody[i] = nullptr;
 			}
 		}
-	} 
-
+	}
+}
+void collision() {
 	for (int i = 0; i < obstacles.size(); i++) {
 		if (obstacles[i] != nullptr) {
 			obstacles[i]->update();
@@ -258,10 +222,78 @@ void stepPhysics(bool interactive, double t)
 	for (int i = 0; i < win.size(); i++) {
 		win[i]->colission(player);
 	}
+}
+void Victory() {
+	if (player->respawnFirework > 100 && player->numFirework < 6) {
+		player->respawnFirework = 0;
+		player->numFirework++;
+		particle.push_back(new Firework(PxSphereGeometry(3), Vector3(player->getPosition().x + 200, player->getPosition().y, player->getPosition().z), Vector3(0, 0, 0), Vector3(0, 100, 0), 5, 0.5, payload, Vector4(1, 0, 0, 1), &particle));
+
+	}
+	else if (player->respawnFirework > 500 && player->numFirework == 6) {
+		player->restart();
+	}
+	if (player->numFirework <= 6)
+		player->respawnFirework++;
+}
+
+// Initialize physics engine
+void initPhysics(bool interactive)
+{
+	PX_UNUSED(interactive);
+
+	gFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gAllocator, gErrorCallback);
+
+	gPvd = PxCreatePvd(*gFoundation);
+	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
+	gPvd->connect(*transport,PxPvdInstrumentationFlag::eALL);
+
+	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
+
+	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
+	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
+	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
+	gDispatcher = PxDefaultCpuDispatcherCreate(2);
+	sceneDesc.cpuDispatcher = gDispatcher;
+	sceneDesc.filterShader = contactReportFilterShader;
+	sceneDesc.simulationEventCallback = &gContactReportCallback;
+	gScene = gPhysics->createScene(sceneDesc);
+	
+	
+	//Suelo
+	RigidBody* suelo = new RigidBody(false, Vector3(1910, -115, 0), Vector4(0.5,1,0.5,1), Vector3(2200, 100, 25), gScene,gPhysics,0);
+	RigidBody* techo = new RigidBody(false, Vector3(1910, 255, 0), Vector4(0.5,1,0.5,1), Vector3(2200, 100, 25), gScene,gPhysics,0);
+	//Player
+	player = new Player(Vector3(-10, 50, 0), gScene, gPhysics, particle); //Segundo Nivel -335
+	player->showPoints();
+	generador= new ParticleGenerator(15, player->getPosition(), Vector3(-50, 0, 0), particle);
+	registro = new ParticleForceRegistry();
+	GetCamera()->setTransform(player->getPosition().x + 100, 75, player->getPosition().z + 200);
+
+	Level1();
+	Level2();
+
+}
+
+// Function to configure what happens in each step of physics
+// interactive: true if the game is rendering, false if it offline
+// t: time passed since last call in milliseconds
+void stepPhysics(bool interactive, double t)
+{
+	PX_UNUSED(interactive);
+
 	registro->updateForces(1);
-	player->update(2);
+	player->update(5);
 	generador->update(Vector3(player->personaje->getPosition().x - 15, player->personaje->getPosition().y, player->personaje->getPosition().z));
 
+	updateParticle(t);
+	updateRigidbody();
+	collision();
+
+	if (player->victory)
+		Victory();	
+	
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 }
@@ -298,6 +330,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'C':
 	{
 		player->shoot(bullets);
+		break;
+	}
+	case 'R': 
+	{
+		player->restart();
 		break;
 	}
 	default:

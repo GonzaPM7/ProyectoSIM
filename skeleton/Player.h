@@ -15,6 +15,9 @@ private:
 	int level = 1;
 public: 
 	RigidBody* personaje;
+	bool victory = false;
+	int respawnFirework = 0;
+	int numFirework = 0;
 	Player(Vector3 pos, PxScene* scene_, PxPhysics* physics_, std::vector<Particle*>& particle);
 	void Jump(float forceJump);
 	Vector3 getPosition();
@@ -25,5 +28,6 @@ public:
 	void showPoints();
 	void clearPoints();
 	void nextLevel();
+	void restart();
 };
 
